@@ -233,7 +233,6 @@ fun whenStatementInVariable() {
 fun notNumAssentionExclamacaoDupla() {
     val nullableName: String? = "George"
     val name:String = nullableName!!
-
     println(name)
 }
 
