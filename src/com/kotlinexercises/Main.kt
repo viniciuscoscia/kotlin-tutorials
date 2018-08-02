@@ -1,7 +1,106 @@
 package com.kotlinexercises
 
-fun main(args: Array<String>) {
+import java.nio.file.Paths
 
+fun main(args: Array<String>) {
+    val printMessage = {message: String -> println(message)}
+
+    printMessage{}
+}
+
+fun comparacao() {
+    var point1 = Point(x = 1, y = 2)
+    var point2 = Point(x = 1, y = 2)
+
+    println(point1 == point2) //true, pois compara valores
+    println(point1 === point2) //false, pois compara referência de objtos
+}
+
+/**
+ * Operator Overload
+ * -- e ++ Não funcionam nessa porra
+ */
+data class Point(val x: Int, val y: Int){
+    operator fun Point.unaryMinus() = Point(-x, -2*y)
+    operator fun Point.inc() = Point(x+2, y+3)
+
+    fun printExampleOperatorOverload() {
+        println("UnaryMinus(): ${-this}\n")
+        println("Inc(): ${this.inc()}")
+    }
+}
+
+/**
+ * Operator Overload 2
+ */
+class MyClass(val a: Int, val b: Int, val c: Int, val d: Int ){
+    operator fun plus(myClass: MyClass): MyClass {
+        return MyClass(a + myClass.a, b + myClass.b, c + myClass.c, d + myClass.d)
+    }
+}
+
+fun repeatSample() {
+    repeat(5) {println("Quero minha casa")}
+}
+
+/**
+ * //TODO entender melhor
+ */
+fun runSample() {
+    val outputPath = Paths.get("/user/home").run {
+        val path = resolve("output")
+        path.toFile().createNewFile()
+        path
+    }
+}
+
+/**
+ * WITH: É um método que você trabalha dentro de um objeto, note que abaixo foi usado o método append() sem
+ * precisar chamar por StringBuilder, também não foi necessário dar return
+ */
+fun alphabetWithSample() = with(StringBuilder()){
+    for(letter in 'A'..'Z'){
+        append(letter)
+    }
+
+    append("\nNow i know all the alphabet")
+    toString()
+}
+
+/**
+ * LET: Dá um "calote" no Null Safety, verificando antes a nulidade e podendo passar um objeto nullable
+ * em um método que não aceita esse tipo
+ */
+fun letSample() {
+    fun sendMailTo(email: String){println("Enviando e-mail para $email")}
+
+    var email: String? = null
+
+    email?.let { email -> sendMailTo(email) }
+}
+
+/**
+ * APPLY: Permite chamar métodos de um objeto de maneira mais curta
+ */
+fun applySample(){
+
+    //Without Apply
+    val task = Runnable { println("Running") }
+    val thread = Thread(task)
+
+    thread.isDaemon = true
+    thread.start()
+
+    //With Apply
+    val task2 = Runnable { println("Running") }
+    Thread(task2).apply { isDaemon = true }.start()
+}
+
+fun extensionFunctionSample() {
+    fun String.lastChar() = this.get(this.length - 1)
+
+    val exemplo = "Exemplo"
+    println(exemplo.lastChar())
 }
 
 /**
