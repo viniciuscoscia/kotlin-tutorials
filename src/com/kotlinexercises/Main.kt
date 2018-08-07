@@ -3,9 +3,31 @@ package com.kotlinexercises
 import java.nio.file.Paths
 
 fun main(args: Array<String>) {
-    val printMessage = {message: String -> println(message)}
 
-    printMessage{}
+}
+
+fun functionWithLambdaAsParameter(x: String, fn: (String) -> String): Unit{
+    val applied = fn(x)
+    println(applied)
+}
+
+fun AnonymousFunction() {
+    fun(x:Int, y: Int): Int = x + y
+}
+
+fun lambdaExpressionExemplos() {
+    val sayHello = { user: String ->
+        println("Hello, $user!")
+    }
+    sayHello("johnny")
+
+    val somar = {x: Int, y: Int -> x + y}
+
+    val conciseLambda: (Int, Int) -> Int = {x, y -> x + y}
+
+    val teste = {println("42")}
+
+    teste.invoke()
 }
 
 fun comparacao() {
